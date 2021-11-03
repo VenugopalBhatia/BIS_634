@@ -8,8 +8,8 @@ class meshTerms:
     def __init__(self,fNameCancer,fNameAlzheimer):
         self.fNameCancer = Path(__file__).parent /"../Data" /fNameCancer
         self.fNameAlzheimer = Path(__file__).parent /"../Data" /fNameAlzheimer
-        self.dfCancer = pd.read_json(self.fNameCancer,orient = "index")
-        self.dfAlzheimer = pd.read_json(self.fNameAlzheimer,orient = "index")
+        self.dfCancer = pd.read_json(self.fNameCancer,orient = "index",convert_axes=False)
+        self.dfAlzheimer = pd.read_json(self.fNameAlzheimer,orient = "index",convert_axes=False)
     
     def getData(self):
         return self.dfCancer,self.dfAlzheimer

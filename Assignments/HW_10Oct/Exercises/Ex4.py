@@ -112,21 +112,21 @@ def mergeSort_parallelized(lst):
     sorted_arrays = [arr_obj.get() for arr_obj in sorted_arr_objs]
     
     
-    pool.close()   #closing and then creating new pools doesn't seem ideal, something like queuing tasks could help here. Kindly guide as to how to optimize this
-    pool.join()
+    # pool.close()   #closing and then creating new pools doesn't seem ideal, something like queuing tasks could help here. Kindly guide as to how to optimize this
+    # pool.join()
     #print(sorted_arrays)
     
-    pool = mp.Pool(num_cpus//2)
+    #pool = mp.Pool(num_cpus//2)
     merged_arr_objs = [pool.apply_async(merge_nparr,args = sorted_arrays[i:i+2]) for i in range(0,len(sorted_arrays)-1,2)]
     merged_arrays = [merged_arr_obj.get() for merged_arr_obj in merged_arr_objs]
     # merged_arrays = []
     # for i in range(0,7,2):
     #     if(type(sorted_arrays) == np.ndarray):
     #         pool.apply_async(Ex4.merge,args = sorted_arrays[i:i+2],callback=)
-    pool.close()
-    pool.join()
+    # pool.close()
+    # pool.join()
 
-    pool = mp.Pool(num_cpus//4)
+    #pool = mp.Pool(num_cpus//4)
     merged_arr_objs2 = [pool.apply_async(merge_nparr,args = merged_arrays[i:i+2]) for i in range(0,len(merged_arrays)-1,2)]
     merged_arrays2 = [merged_arr_obj2.get() for merged_arr_obj2 in merged_arr_objs2]
     pool.close()

@@ -1,7 +1,8 @@
 from Exercises import Ex4
 from time import perf_counter
 import numpy as np
-
+import importlib
+importlib.reload(Ex4)
 
 def run_test(n_arr):
     time_taken = {'parallel':{},'regular':{}}
