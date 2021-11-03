@@ -49,13 +49,19 @@ class getEntrezData:
         articleSet = records_raw.select("pubmedarticleset>*")
         records = {}
         for article in articleSet:
-            #print(article)
+
             
             articlePmid = article.select("pmid")[0].text
+            ## Could have written the whole thing as a try except block
             if(article.name == "pubmedbookarticle"):
                 articleTitle = article.select("booktitle")[0].text 
+                
             else:
-                articleTitle = article.select("title")[0].text
+                try:
+                    articleTitle = article.select("articletitle")[0].text # with beautiful soup calling text I think fetches every piece of text in the tag, thus the italics problem doesn't occur.
+                except:
+                    articleTitle = article.select("title")[0].text
+
             articleAbstract = [abstract.text for abstract in article.select("abstract>abstracttext")]
             articleMeshTerms = [meshTerm.text for meshTerm in article.select("meshheading")]
             records[articlePmid] = {

@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
-import Path
-
+from pathlib import Path
+from matplotlib import pyplot as plt
+import seaborn as sns
 
 class meshTerms:
     def __init__(self,fNameCancer,fNameAlzheimer):
@@ -23,5 +24,29 @@ class meshTerms:
         df1 = pd.DataFrame({"mesh_terms":np.unique(mesh_terms_arr,return_counts = True)[0],"counts":np.unique(mesh_terms_arr,return_counts = True)[1]})
         mesh_terms_frequency = df1.nlargest(nlargest,'counts')
         return mesh_terms_frequency
+    
+    def createSummaryTable(self,df_alzheimer_nl,df_cancer_nl):
+        df_summaryTable = pd.DataFrame(0,index = df_alzheimer_nl['mesh_terms'],columns = df_cancer_nl['mesh_terms'])
+        index = df_summaryTable.index
+        def getTermSum(x):
+            _index = x.name
+            try:
+                df_summaryTable[_index][_index] = df_cancer_nl[df_cancer_nl['mesh_terms'] == _index]['counts'].values[0] + df_alzheimer_nl[df_alzheimer_nl['mesh_terms'] == _index]['counts'].values[0]
+            except:
+                pass
+        df_summaryTable.apply(getTermSum,axis = 1)
+        return df_summaryTable
+
+    
+
+    def plotMeshTermCounts(self,mesh_terms_frequency):
+        sns.set(rc={'figure.figsize':(25.7,12.27)})
+        sns.barplot(x = mesh_terms_frequency['mesh_terms'],y = mesh_terms_frequency['counts'])
+    
+    def genSummary(self,nLargest = 10):
+        df_cancer_nl = self.getMeshTermCounts(self.dfCancer,nlargest = nLargest)
+        df_alzheimer_nl = self.getMeshTermCounts(self.dfAlzheimer,nlargest = nLargest)
+        summary_table = self.createSummaryTable(df_alzheimer_nl,df_cancer_nl)
+        return summary_table,df_alzheimer_nl,df_cancer_nl
 
     
