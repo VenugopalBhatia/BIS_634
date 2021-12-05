@@ -14,7 +14,7 @@ size_of_generation = 1000
 
 
 
-def mutate(seed_,prng_i, advance, gene, mutation_rate=0.05):
+def mutate(prng_i, advance, gene, seed_ = 0,mutation_rate=0.05):
     prng = np.random.Generator(PCG64(seed_, prng_i).advance(advance))
     return "".join(
         prng.choice(gene_bases) if prng.random() < mutation_rate else base
@@ -47,7 +47,7 @@ def mutate_parallel(advance, parent,mutation_rate,i,j):
 def mutate_parallel_s2(seed_, advance,parent,mutation_rate):
     return max(
             [
-                mutate(seed_,prng_i, advance, parent, mutation_rate=mutation_rate)
+                mutate(prng_i, advance, parent, seed_,mutation_rate=mutation_rate)
                 for prng_i in range(size_of_generation)
             ],
             key=fitness,
@@ -82,20 +82,19 @@ def weasel_program_v2(mutation_rate=0.05, initial="                            "
     while score < len(parent):
         print_status(generation, parent, score)
         advance = generation * 2 * len(parent)
-        parent_objs = [pool.apply_async(mutate_parallel_s2,args = (seed_,advance,parent,mutation_rate)) for seed_ in range(num_cpus)]
+        parent_objs = [pool.apply_async(mutate_parallel_s2,args = (advance,parent,seed_,mutation_rate)) for seed_ in range(num_cpus)]
         parent = max([parent_obj.get() for parent_obj in parent_objs],key = fitness)
         generation += 1
         score = fitness(parent)
     print_status(generation, parent, score)
     return generation
 
-                         
 
 if __name__ == '__main__':
 
 
     start_time = time.perf_counter()
-    num_generations = weasel_program_v2()
+    num_generations = weasel_program()
     stop_time = time.perf_counter()
     print(f"per generation evolution time: {(stop_time - start_time) / num_generations} s")
     print(f"total evolution time: {stop_time - start_time} s")
