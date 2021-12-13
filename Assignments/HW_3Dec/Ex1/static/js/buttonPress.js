@@ -7,7 +7,7 @@ $("#submit").click(function(event){
     $.ajax({
         type: 'GET',
         url:'http://127.0.0.1:8000/info',
-        data: {'state_name':$('#state').val()},
+        data: $("#regionData").serialize(),
         success: function(res){
             $('main').append(res)
         },

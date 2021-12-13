@@ -16,9 +16,7 @@ importlib.reload(utils)
 
 
 class optimize_model:
-
-    __slots__ = ['trials','fspace','algo','max_evals','df','message_tokenized','x','y','model','lib']
-
+    
     def __init__(self,model,algo,max_evals,df,message_tokenized,x,y,lib = 'sklearn'):
         self.trials = Trials()
         self.fspace = self.get_fspace(model)
@@ -30,7 +28,6 @@ class optimize_model:
         self.y = y
         self.model = model
         self.lib = lib
-    
 
     # Method to return stratified cross validation scores 
 
@@ -47,6 +44,7 @@ class optimize_model:
             
         else:
             X,x_feature_names,count_vec = utils.get_features(df = self.df,n = numFeatures,message_tokenized = self.message_tokenized)
+            
         Y = self.df[self.y].values
         self.count_vec = count_vec
         self.feature_names = x_feature_names
@@ -91,7 +89,7 @@ class optimize_model:
     def get_fspace(self,model):
         fspace_dict = {
             'naive_bayes':{
-                'numFeatures': hp.choice('numFeatures',range(100,2500)),
+                'numFeatures': hp.choice('numFeatures',range(10,2000)),
                 'alpha': hp.uniform('alpha', 0.0, 2.0)
 
             },

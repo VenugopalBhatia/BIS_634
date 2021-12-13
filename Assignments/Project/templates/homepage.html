@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"> </script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    </head>
+    <body>
+        <form action="/getRegionData" id = "regionData" method = "POST">
+            <fieldset id = "Region-Select">
+                <select name="Region_Dropdown" id="dp1" multiple = "multiple">
+                    {% for i in dropdown %}
+                        {%if i|length > 1 %}
+                            
+                            <option value= "{{i}}" >{{i}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </fieldset>
+            <input type="submit" id = "fetchData" value="Go">    
+        </form>
+
+        
+          
+          
+        <div id = "Graph_TimeSeries">
+            <div id = "TimeGraph">
+            </div>
+    
+            <div id = "TimeGraphRadio">
+                <input type="radio" id="grouped-bar" name="barmode" value="group"
+                       checked>
+                <label for="barmode_group">group</label>
+                <input type="radio" id="stacked-bar" name="barmode" value="stack">
+                <label for="barmode_stack">stack</label>
+                <input type="radio" id="line" name="barmode" value="line">
+                <label for="barmode_line">line</label>
+                
+            </div>
+        </div>
+        
+        <div id = "Graph_WordCloud">
+            <div id = "WordCloud">
+                <img src="./static/images/home_pg_wc_neu.jpg" alt="Wordcloud">
+
+            
+
+            </div>
+    
+            <div id = "WordcloudRadio">
+                <input type="radio" id="ENeg" name="Sentiment" value=-2>
+                <label >Extremely Negative</label>
+                <input type="radio" id="Neg" name="Sentiment" value= -1 >
+                <label >Negative</label>
+                <input type="radio" id="Neu" name="Sentiment" value=0 checked>
+                <label> Neutral </label>
+                <input type="radio" id="Pos" name="Sentiment" value=1>
+                <label> Positive </label>
+                <input type="radio" id="EPos" name="Sentiment" value=2>
+                <label> Extremely Positive </label>
+                
+            </div>
+        </div>
+
+        <div id = "Graph_FrequentWords">
+            <div id = "word_frequency">
+                
+
+            </div>
+    
+            <div id = "numWords_select">
+                <label for="numWords">Choose n </label>
+
+                    <select name="numWords" id="numWords">
+                    <option value= 10 >10</option>
+                    <option value= 20 >20</option>
+                    <option value= 50 >50</option>
+                    <option value= 100 >100</option>
+                    </select>
+        
+                
+            </div>
+        </div>
+
+        <div id = "Graph_Mentions">
+            <div id = "mentions_frequency">
+                
+
+            </div>
+    
+            <div id = "Mentions_count_select">
+                <label for="Mentions_count">Choose mentions count threshold </label>
+
+                    <select name="Mentions_count" id="Mentions_count">
+                    <option value= 100 >100</option>
+                    <option value= 50 >50</option>
+                    <option value= 20 >20</option>
+                    <option value= 10 >10</option>
+                    <option value= 1 >1</option>
+                    </select>
+        
+                
+            </div>
+        </div>
+
+
+        <div id = "Graph_Histograms">
+            <div id = "tweet_length_histograms">
+                
+
+            </div>
+    
+            
+            <div id = "Histograms_Radio">
+                <input type="radio" id="ENeg_h" name="Sentiment_h" value=-2>
+                <label >Extremely Negative</label>
+                <input type="radio" id="Neg" name="Sentiment_h" value= -1 >
+                <label >Negative</label>
+                <input type="radio" id="Neu" name="Sentiment_h" value=0 checked>
+                <label> Neutral </label>
+                <input type="radio" id="Pos" name="Sentiment_h" value=1>
+                <label> Positive </label>
+                <input type="radio" id="EPos" name="Sentiment_h" value=2>
+                <label> Extremely Positive </label>
+                
+            </div>
+        
+                
+            
+        </div>
+
+        
+        
+         <script src = "./static/js/homepage.js"></script>
+    </body>
+    
+</html>
