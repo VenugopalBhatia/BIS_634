@@ -157,7 +157,11 @@ def getHistograms():
 
     return jsonify(tweet_lengths_dict)
 
-    
+
+@app.route('/topicModel')
+
+def getTopicModel():
+    return render_template('lda.html')
     
 
 

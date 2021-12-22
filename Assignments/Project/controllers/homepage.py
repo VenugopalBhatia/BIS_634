@@ -30,7 +30,7 @@ def returnRegionData(regions = None):
     # print('**************',regions,type(regions))
     # print(regions)
     if(regions!= None):
-        subset_data = data[data['Location'].str.contains('|'.join(regions),na = False,case = False)]
+        subset_data = data[data['Location'].str.contains("\\b(" + "|".join(regions) + ")\\b",na = False,case = False)]
     else:
         subset_data = data
 
@@ -58,7 +58,7 @@ def getWordCloud(regions = None,sentiment = 0):
             pass
     
     if(regions!= None):
-        subset_data = data[data['Location'].str.contains('|'.join(regions),na = False,case = False)].copy()
+        subset_data = data[data['Location'].str.contains("\\b(" + "|".join(regions) + ")\\b",na = False,case = False)].copy()
     else:
         print("Yesss")
         subset_data = data
@@ -77,7 +77,7 @@ def getTopNTerms(regions = None,sentiment = 0,n = 10):
     
     
     if(regions!= None):
-        subset_data = data[data['Location'].str.contains('|'.join(regions),na = False,case = False)].copy()
+        subset_data = data[data['Location'].str.contains("\\b(" + "|".join(regions) + ")\\b",na = False,case = False)].copy()
     else:
         subset_data = data
 
@@ -92,7 +92,7 @@ def getTopNTerms(regions = None,sentiment = 0,n = 10):
 def getTopMentions(region = None,n = 100):
     all_words = []
     if(region!= None):
-        subset_data = data[data['Location'].str.contains('|'.join(region),na = False,case = False)].copy()
+        subset_data = data[data['Location'].str.contains("\\b(" + "|".join(region) + ")\\b",na = False,case = False)].copy()
     else:
         print("Yesss")
         subset_data = data
@@ -119,7 +119,7 @@ def getHistogram(regions = None,sentiment = 0):
     
     
     if(regions!= None):
-        subset_data = data[data['Location'].str.contains('|'.join(regions),na = False,case = False)].copy()
+        subset_data = data[data['Location'].str.contains("\\b(" + "|".join(regions) + ")\\b",na = False,case = False)].copy()
     else:
         subset_data = data
 

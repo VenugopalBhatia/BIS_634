@@ -12,7 +12,7 @@ def create_wordcloud(text,targetFilePath):
     wc = WordCloud(background_color="white",
     max_words=10000,
     stopwords=stopwords,
-    width = 500,
+    width = 1000,
     height = 500
     )
     wc.generate(str(text))

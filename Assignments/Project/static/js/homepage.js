@@ -209,8 +209,16 @@ getTopMentions = function(region){
                 y: res.y,
                 orientation:'h'
               }];
+
+            var layout = {
+                autosize: false,
+                width: 1500,
+                height: 700,
+            }
+
+
               
-              Plotly.newPlot('mentions_frequency', data);
+              Plotly.newPlot('mentions_frequency', data,layout);
         },
         error(res){
             console.log("Error")
@@ -228,12 +236,14 @@ getHistogram = function(region){
             var trace = {
                 x: res.tweet_lengths,
                 type: 'histogram',
+                histnorm: 'probability density'
               };
             var data = [trace];
             var layout = {
-                bargap: 0.05, 
+                bargap: 0.00000005, 
+                
             };
-            Plotly.newPlot('tweet_length_histograms', data, layout);
+            Plotly.newPlot('tweet_length_histograms', data,layout);
         },
         error(res){
             console.log("Error")

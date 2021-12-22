@@ -41,12 +41,15 @@ class Preprocessor:
             if w.lower() not in self.stopwords:
                 wordList.append(w)
         return wordList
+
+    
         
     def lemmatize_message(self,wordTokens):
         posTags = self.pos_tag(wordTokens)
         lemmatized_words = []
         for w in posTags:
-            lemmatized_words.append(self.lemmatizer.lemmatize(w[0],pos=self.get_simple_tag(w[1])).lower())
+            if(len(w[0])>3):
+                lemmatized_words.append(self.lemmatizer.lemmatize(w[0],pos=self.get_simple_tag(w[1])).lower())
         
         return lemmatized_words
     
